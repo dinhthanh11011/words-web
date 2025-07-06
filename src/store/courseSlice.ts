@@ -102,13 +102,9 @@ const courseSlice = createSlice({
       })
       .addCase(fetchCourses.fulfilled, (state, action) => {
         state.loading = false;
-        state.courses = action.payload.courses;
-        state.pagination = {
-          page: action.payload.page,
-          limit: action.payload.limit,
-          total: action.payload.total,
-          totalPages: action.payload.totalPages,
-        };
+        state.courses = action.payload.items;
+        state.pagination.total = action.payload.total;
+        state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.limit);
       })
       .addCase(fetchCourses.rejected, (state, action) => {
         state.loading = false;

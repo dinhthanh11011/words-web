@@ -65,7 +65,7 @@ export default function Courses() {
     router.push('/courses/create');
   };
 
-  const handleCourseClick = (courseId: string) => {
+  const handleCourseClick = (courseId: number) => {
     router.push(`/courses/${courseId}`);
   };
 
