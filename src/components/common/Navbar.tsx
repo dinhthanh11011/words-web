@@ -94,6 +94,7 @@ export function Navbar({
   const navigationItems = [
     { href: '/home', label: t('home') },
     { href: '/courses', label: t('courses') },
+    { href: '/profile', label: t('profile') },
   ];
 
   return (

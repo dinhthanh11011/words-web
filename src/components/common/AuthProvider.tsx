@@ -1,6 +1,6 @@
 "use client";
 import { AppDispatch, RootState } from "@/store";
-import { clearUser, fetchUser, setToken } from "@/store/userSlice";
+import { clearUser, fetchUser, initializeFromStorage } from "@/store/userSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,11 +9,10 @@ export default function AuthProvider({ children }: { readonly children: React.Re
     const user = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
-        const savedToken = localStorage.getItem('token');
-        if (savedToken && !user.token) {
-            dispatch(setToken(savedToken));
+        if (!user.info && !user.token && !user.loading && !user.error) {
+            dispatch(initializeFromStorage());
         }
-    }, [dispatch, user.token]);
+    }, [dispatch, user.info, user.token, user.loading, user.error]);
 
     useEffect(() => {
         if (user.token && !user.info && !user.loading && !user.error) {

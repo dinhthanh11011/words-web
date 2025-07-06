@@ -17,7 +17,8 @@
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
     "home": "Trang chủ",
-    "courses": "Khóa học"
+    "courses": "Khóa học",
+    "profile": "Hồ sơ"
   },
   "Profile": {
     "title": "Hồ sơ",
@@ -46,5 +47,18 @@
   },
   "RootPage": {
     "redirecting": "Đang chuyển hướng..."
+  },
+  "Courses": {
+    "title": "Khóa học",
+    "createCourse": "Tạo khóa học",
+    "languages": "Ngôn ngữ",
+    "allCourses": "Tất cả khóa học",
+    "words": "từ",
+    "students": "học viên",
+    "enrolled": "đã đăng ký",
+    "noCourses": "Không tìm thấy khóa học nào",
+    "loading": "Đang tải khóa học...",
+    "error": "Lỗi khi tải khóa học",
+    "tryAgain": "Thử lại"
   }
 }

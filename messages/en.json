@@ -17,7 +17,8 @@
     "login": "Login",
     "logout": "Logout",
     "home": "Home",
-    "courses": "Courses"
+    "courses": "Courses",
+    "profile": "Profile"
   },
   "Profile": {
     "title": "Profile",
@@ -46,5 +47,18 @@
   },
   "RootPage": {
     "redirecting": "Redirecting..."
+  },
+  "Courses": {
+    "title": "Courses",
+    "createCourse": "Create Course",
+    "languages": "Languages",
+    "allCourses": "All Courses",
+    "words": "words",
+    "students": "students",
+    "enrolled": "enrolled",
+    "noCourses": "No courses found",
+    "loading": "Loading courses...",
+    "error": "Error loading courses",
+    "tryAgain": "Try Again"
   }
 }
