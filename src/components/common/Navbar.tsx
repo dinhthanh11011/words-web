@@ -83,6 +83,10 @@ export function Navbar({
     handleLogout();
   };
 
+  const handleLanguageChange = (locale: string) => {
+    handleLocaleChange(locale);
+  };
+
   const isActive = (path: string) => {
     return pathname.includes(path);
   };
@@ -98,7 +102,7 @@ export function Navbar({
       <button
         className='font-bold text-lg tracking-tight cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none p-0'
         onClick={() => router.push('/home')}
-        aria-label="Go to home page"
+        aria-label='Go to home page'
       >
         Words
       </button>
@@ -122,21 +126,24 @@ export function Navbar({
 
       {/* Right side controls */}
       <div className='flex items-center gap-4'>
-        {/* Language Switcher */}
-        <Select value={currentLocale} onValueChange={handleLocaleChange}>
-          <SelectTrigger className='w-32'>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {locales.map((locale) => (
-              <SelectItem key={locale.value} value={locale.value}>
-                {locale.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {/* Theme Switcher */}
-        <div className='hidden sm:flex items-center gap-2'>
+        {/* Language Switcher - Desktop only */}
+        <div className='hidden md:block'>
+          <Select value={currentLocale} onValueChange={handleLocaleChange}>
+            <SelectTrigger className='w-32'>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {locales.map((locale) => (
+                <SelectItem key={locale.value} value={locale.value}>
+                  {locale.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Theme Switcher - Desktop only */}
+        <div className='hidden md:flex items-center gap-2'>
           <span className='text-xs text-gray-500 dark:text-gray-400'>🌞</span>
           <Switch
             checked={theme === 'dark'}
@@ -144,6 +151,7 @@ export function Navbar({
           />
           <span className='text-xs text-gray-500 dark:text-gray-400'>🌙</span>
         </div>
+
         {/* Mobile Menu Button */}
         <button
           ref={mobileMenuButtonRef}
@@ -151,14 +159,30 @@ export function Navbar({
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label='Toggle mobile menu'
         >
-          <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <svg
+            className='w-5 h-5'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
             {isMobileMenuOpen ? (
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M6 18L18 6M6 6l12 12'
+              />
             ) : (
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M4 6h16M4 12h16M4 18h16'
+              />
             )}
           </svg>
         </button>
+
         {/* User Avatar + Popover */}
         {!user && (
           <Button
@@ -199,7 +223,7 @@ export function Navbar({
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           ref={mobileMenuRef}
           className='absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 md:hidden'
         >
@@ -221,17 +245,43 @@ export function Navbar({
                 {item.label}
               </button>
             ))}
-            
+
+            {/* Mobile Language Switcher */}
+            <div className='flex items-center justify-between px-3 py-2'>
+              <span className='text-sm text-foreground'>Language</span>
+              <div className='flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1'>
+                {locales.map((locale) => (
+                  <button
+                    key={locale.value}
+                    onClick={() => handleLanguageChange(locale.value)}
+                    className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                      locale.value === currentLocale
+                        ? 'bg-white dark:bg-gray-900 text-foreground shadow-sm'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-foreground'
+                    }`}
+                  >
+                    {locale.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Mobile Theme Switcher */}
             <div className='flex items-center justify-between px-3 py-2'>
               <span className='text-sm text-foreground'>Theme</span>
               <div className='flex items-center gap-2'>
-                <span className='text-xs text-gray-500 dark:text-gray-400'>🌞</span>
+                <span className='text-xs text-gray-500 dark:text-gray-400'>
+                  🌞
+                </span>
                 <Switch
                   checked={theme === 'dark'}
-                  onCheckedChange={(v) => handleThemeChange(v ? 'dark' : 'light')}
+                  onCheckedChange={(v) =>
+                    handleThemeChange(v ? 'dark' : 'light')
+                  }
                 />
-                <span className='text-xs text-gray-500 dark:text-gray-400'>🌙</span>
+                <span className='text-xs text-gray-500 dark:text-gray-400'>
+                  🌙
+                </span>
               </div>
             </div>
           </div>
