@@ -1,6 +1,13 @@
 {
   "LoginPage": {
     "title": "Đăng nhập vào Words",
-    "subtitle": "Chào mừng trở lại! Vui lòng đăng nhập để tiếp tục."
+    "subtitle": "Chào mừng trở lại! Vui lòng đăng nhập để tiếp tục.",
+    "googleButton": "Tiếp tục với Google",
+    "footer": "© {year} Words App",
+    "or": "Hoặc",
+    "termsText": "Bằng cách tiếp tục, bạn đồng ý với",
+    "termsLink": "Điều khoản sử dụng",
+    "and": "và",
+    "privacyLink": "Chính sách bảo mật"
   }
 }

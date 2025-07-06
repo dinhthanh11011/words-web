@@ -1,6 +1,13 @@
 {
   "LoginPage": {
     "title": "Sign in to Words",
-    "subtitle": "Welcome back! Please sign in to continue."
+    "subtitle": "Welcome back! Please sign in to continue.",
+    "googleButton": "Continue with Google",
+    "footer": "© {year} Words App",
+    "or": "Or",
+    "termsText": "By continuing, you agree to our",
+    "termsLink": "Terms of Service",
+    "and": "and",
+    "privacyLink": "Privacy Policy"
   }
 }
