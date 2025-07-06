@@ -7,23 +7,23 @@ export default function Login() {
   const t = useTranslations('LoginPage');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-2xl border-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
           <CardHeader className="space-y-6 text-center pb-8">
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-700 dark:to-purple-900 rounded-2xl flex items-center justify-center shadow-lg">
                   <span className="text-2xl font-bold text-white">W</span>
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-gray-900"></div>
               </div>
             </div>
             <div className="space-y-2">
-              <CardTitle className="text-2xl font-bold text-gray-900">
+              <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t('title')}
               </CardTitle>
-              <CardDescription className="text-gray-600 text-base">
+              <CardDescription className="text-gray-600 dark:text-gray-300 text-base">
                 {t('subtitle')}
               </CardDescription>
             </div>
@@ -32,7 +32,7 @@ export default function Login() {
           <CardContent className="space-y-6">
             <Button 
               asChild
-              className="w-full h-12 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-gray-300 shadow-sm transition-all duration-200 group"
+              className="w-full h-12 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-gray-300 shadow-sm transition-all duration-200 group dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100 dark:border-gray-700 dark:hover:border-gray-600"
             >
               <a href={process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL}>
                 <div className="flex items-center justify-center space-x-3">
@@ -51,20 +51,20 @@ export default function Login() {
             
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-200" />
+                <span className="w-full border-t border-gray-200 dark:border-gray-700" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">{t('or')}</span>
+                <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">{t('or')}</span>
               </div>
             </div>
             
-            <div className="text-center text-sm text-gray-500">
+            <div className="text-center text-sm text-gray-500 dark:text-gray-400">
               {t('termsText')}{' '}
-              <a href="#" className="text-indigo-600 hover:text-indigo-500 font-medium">
+              <a href="#" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">
                 {t('termsLink')}
               </a>{' '}
               {t('and')}{' '}
-              <a href="#" className="text-indigo-600 hover:text-indigo-500 font-medium">
+              <a href="#" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">
                 {t('privacyLink')}
               </a>
             </div>
@@ -72,7 +72,7 @@ export default function Login() {
         </Card>
         
         <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             {t('footer', { year: new Date().getFullYear() })}
           </p>
         </div>

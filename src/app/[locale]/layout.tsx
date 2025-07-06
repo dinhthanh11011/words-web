@@ -3,6 +3,7 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import '../globals.css';
+import { Navbar } from '@/components/common/Navbar';
  
 export default async function LocaleLayout({
   children,
@@ -20,7 +21,26 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
+        <Navbar currentLocale={locale} />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
