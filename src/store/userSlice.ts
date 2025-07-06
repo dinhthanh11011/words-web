@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import userApi from '@/api/user';
 
+interface UserState {
+  info: { name: string; email?: string; image?: string } | null;
+  loading: boolean;
+  error: unknown;
+  token: string | null;
+}
+
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async (_, { rejectWithValue }) => {
@@ -13,24 +20,23 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
-const initialToken =
-  typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+const initialState: UserState = {
+  info: null,
+  loading: false,
+  error: null,
+  token: null,
+};
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    info: null,
-    loading: false,
-    error: null,
-    token: initialToken,
-  },
+  initialState,
   reducers: {
     setUser(state, action) {
       state.info = action.payload;
     },
     clearUser(state) {
       state.info = null;
-      state.token = null;
+      state.error = null;
     },
     setToken(state, action) {
       state.token = action.payload;
@@ -63,5 +69,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, setToken, clearToken } = userSlice.actions;
+export const { setUser, clearUser, setToken, clearToken } =
+  userSlice.actions;
 export default userSlice.reducer;
