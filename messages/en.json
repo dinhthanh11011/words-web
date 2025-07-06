@@ -12,5 +12,29 @@
   },
   "LoginCallback": {
     "loggingIn": "Logging in..."
+  },
+  "Navbar": {
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "Profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "email": "Email",
+    "settings": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "light": "Light",
+    "dark": "Dark",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "account": "Account",
+    "logout": "Logout",
+    "logoutConfirm": "Are you sure you want to logout?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "Error loading profile"
   }
 }

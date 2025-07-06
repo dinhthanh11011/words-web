@@ -1,19 +1,17 @@
 "use client";
-import React, { useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { AppDispatch, RootState } from '@/store';
+import { setTheme } from '@/store/themeSlice';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslations } from 'next-intl';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '../ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Switch } from '../ui/switch';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { fetchUser, clearUser } from '@/store/userSlice';
-import { RootState, AppDispatch } from '@/store';
-import userApis from '@/api/user';
-
-const locales = [
-  { value: 'en', label: 'English' },
-  { value: 'vn', label: 'Tiếng Việt' },
-];
+import { useLocale } from '@/hooks/useLocale';
+import { useLogout } from '@/hooks/useLogout';
 
 export function Navbar({
   currentLocale = 'en',
@@ -21,13 +19,13 @@ export function Navbar({
   readonly currentLocale?: string;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.info as { name: string; image?: string } | null);
-
-  const [theme, setTheme] = React.useState(
-    typeof window !== 'undefined' ? localStorage.getItem('theme') ?? 'light' : 'light'
-  );
+  const theme = useSelector((state: RootState) => state.theme.value);
+  const t = useTranslations('Navbar');
+  
+  const { handleLocaleChange, locales } = useLocale();
+  const { handleLogout } = useLogout();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -37,31 +35,8 @@ export function Navbar({
     }
   }, [theme]);
 
-  const handleLocaleChange = (value: string) => {
-    const segments = pathname.split('/');
-    if (locales.some(l => l.value === segments[1])) {
-      segments[1] = value;
-    } else {
-      segments.splice(1, 0, value);
-    }
-    router.push(segments.join('/') || '/');
-  };
-
-  useEffect(() => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-    if (token) {
-      dispatch(fetchUser());
-    } else {
-      dispatch(clearUser());
-    }
-  }, [dispatch]);
-
-  // Logout handler
-  const handleLogout = () => {
-    userApis.logout();
-    localStorage.removeItem('token');
-    dispatch(clearUser());
-    router.replace('/login');
+  const handleThemeChange = (newTheme: string) => {
+    dispatch(setTheme(newTheme));
   };
 
   return (
@@ -84,10 +59,22 @@ export function Navbar({
         {/* Theme Switcher */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray-500 dark:text-gray-400">🌞</span>
-          <Switch checked={theme === 'dark'} onCheckedChange={v => setTheme(v ? 'dark' : 'light')} />
+          <Switch
+            checked={theme === 'dark'}
+            onCheckedChange={v => handleThemeChange(v ? 'dark' : 'light')}
+          />
           <span className="text-xs text-gray-500 dark:text-gray-400">🌙</span>
         </div>
         {/* User Avatar + Popover */}
+        {!user && (
+          <Button
+            variant="outline"
+            onClick={() => router.push('/login')}
+            className="ml-2"
+          >
+            {t('login')}
+          </Button>
+        )}
         {user && (
           <Popover>
             <PopoverTrigger asChild>
@@ -108,7 +95,7 @@ export function Navbar({
                   className="w-full mt-2 px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-sm"
                   onClick={handleLogout}
                 >
-                  Logout
+                  {t('logout')}
                 </button>
               </div>
             </PopoverContent>

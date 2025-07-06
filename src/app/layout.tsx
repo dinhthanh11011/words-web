@@ -2,15 +2,18 @@
 import store from '@/store';
 import { Provider } from 'react-redux';
 import './globals.css';
+import AuthProvider from '@/components/common/AuthProvider';
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   return (
     <Provider store={store}>
-      {children}
+      <AuthProvider>
+        {children}
+      </AuthProvider>
     </Provider>
   );
 }

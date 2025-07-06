@@ -12,5 +12,29 @@
   },
   "LoginCallback": {
     "loggingIn": "Đang đăng nhập..."
+  },
+  "Navbar": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất"
+  },
+  "Profile": {
+    "title": "Hồ sơ",
+    "personalInfo": "Thông tin cá nhân",
+    "name": "Tên",
+    "email": "Email",
+    "settings": "Cài đặt",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "light": "Sáng",
+    "dark": "Tối",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt",
+    "account": "Tài khoản",
+    "logout": "Đăng xuất",
+    "logoutConfirm": "Bạn có chắc chắn muốn đăng xuất?",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "loading": "Đang tải...",
+    "error": "Lỗi khi tải hồ sơ"
   }
 }
