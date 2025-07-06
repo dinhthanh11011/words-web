@@ -15,7 +15,9 @@
   },
   "Navbar": {
     "login": "Đăng nhập",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "home": "Trang chủ",
+    "courses": "Khóa học"
   },
   "Profile": {
     "title": "Hồ sơ",

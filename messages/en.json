@@ -15,7 +15,9 @@
   },
   "Navbar": {
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "home": "Home",
+    "courses": "Courses"
   },
   "Profile": {
     "title": "Profile",

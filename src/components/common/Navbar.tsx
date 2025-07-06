@@ -1,8 +1,8 @@
 'use client';
 import { AppDispatch, RootState } from '@/store';
 import { setTheme } from '@/store/themeSlice';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslations } from 'next-intl';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -25,6 +25,7 @@ export function Navbar({
   readonly currentLocale?: string;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(
     (state: RootState) =>
@@ -36,6 +37,9 @@ export function Navbar({
   const { handleLocaleChange, locales } = useLocale();
   const { handleLogout } = useLogout();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -44,6 +48,26 @@ export function Navbar({
       localStorage.setItem('theme', theme);
     }
   }, [theme]);
+
+  // Auto close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMobileMenuOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        mobileMenuButtonRef.current &&
+        !mobileMenuButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   const handleThemeChange = (newTheme: string) => {
     dispatch(setTheme(newTheme));
@@ -59,8 +83,18 @@ export function Navbar({
     handleLogout();
   };
 
+  const isActive = (path: string) => {
+    return pathname.includes(path);
+  };
+
+  const navigationItems = [
+    { href: '/home', label: t('home') },
+    { href: '/courses', label: t('courses') },
+  ];
+
   return (
     <nav className='w-full flex items-center justify-between px-4 py-2 border-b bg-white/80 dark:bg-black/60 backdrop-blur z-50'>
+      {/* Logo */}
       <button
         className='font-bold text-lg tracking-tight cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none p-0'
         onClick={() => router.push('/home')}
@@ -68,6 +102,25 @@ export function Navbar({
       >
         Words
       </button>
+
+      {/* Desktop Navigation */}
+      <div className='hidden md:flex items-center space-x-6'>
+        {navigationItems.map((item) => (
+          <button
+            key={item.href}
+            onClick={() => router.push(item.href)}
+            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              isActive(item.href)
+                ? 'bg-primary text-primary-foreground'
+                : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Right side controls */}
       <div className='flex items-center gap-4'>
         {/* Language Switcher */}
         <Select value={currentLocale} onValueChange={handleLocaleChange}>
@@ -83,7 +136,7 @@ export function Navbar({
           </SelectContent>
         </Select>
         {/* Theme Switcher */}
-        <div className='flex items-center gap-2'>
+        <div className='hidden sm:flex items-center gap-2'>
           <span className='text-xs text-gray-500 dark:text-gray-400'>🌞</span>
           <Switch
             checked={theme === 'dark'}
@@ -91,6 +144,21 @@ export function Navbar({
           />
           <span className='text-xs text-gray-500 dark:text-gray-400'>🌙</span>
         </div>
+        {/* Mobile Menu Button */}
+        <button
+          ref={mobileMenuButtonRef}
+          className='md:hidden p-2 rounded-md text-foreground hover:bg-accent'
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label='Toggle mobile menu'
+        >
+          <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            {isMobileMenuOpen ? (
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+            ) : (
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
+            )}
+          </svg>
+        </button>
         {/* User Avatar + Popover */}
         {!user && (
           <Button
@@ -128,6 +196,47 @@ export function Navbar({
           </Popover>
         )}
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div 
+          ref={mobileMenuRef}
+          className='absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 md:hidden'
+        >
+          <div className='px-4 py-2 space-y-2'>
+            {/* Mobile Navigation */}
+            {navigationItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => {
+                  router.push(item.href);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive(item.href)
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            
+            {/* Mobile Theme Switcher */}
+            <div className='flex items-center justify-between px-3 py-2'>
+              <span className='text-sm text-foreground'>Theme</span>
+              <div className='flex items-center gap-2'>
+                <span className='text-xs text-gray-500 dark:text-gray-400'>🌞</span>
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={(v) => handleThemeChange(v ? 'dark' : 'light')}
+                />
+                <span className='text-xs text-gray-500 dark:text-gray-400'>🌙</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
