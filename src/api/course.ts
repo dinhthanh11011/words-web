@@ -1,4 +1,4 @@
-// import axios from '@/lib/axios'; // Commented out for dummy data
+import axios from '@/lib/axios';
 
 export interface Course {
   id: string;
@@ -12,10 +12,18 @@ export interface Course {
   updatedAt: string;
 }
 
-export interface Language {
-  code: string;
+export interface LanguageName {
+  id: number;
+  languageId: number;
+  locale: string;
   name: string;
-  flag?: string;
+}
+
+export interface Language {
+  id: number;
+  locale: string;
+  flag: string;
+  names: LanguageName[];
 }
 
 export interface CoursesResponse {
@@ -25,18 +33,6 @@ export interface CoursesResponse {
   limit: number;
   totalPages: number;
 }
-
-// Dummy data for development
-const dummyLanguages: Language[] = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'vn', name: 'Vietnamese', flag: '🇻🇳' },
-  { code: 'es', name: 'Spanish', flag: '🇪🇸' },
-  { code: 'fr', name: 'French', flag: '🇫🇷' },
-  { code: 'de', name: 'German', flag: '🇩🇪' },
-  { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
-  { code: 'ko', name: 'Korean', flag: '🇰🇷' },
-  { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
-];
 
 const dummyCourses: Course[] = [
   {
@@ -178,11 +174,8 @@ export async function getCourses(params?: {
   limit?: number;
   language?: string;
 }) {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  const page = params?.page || 1;
-  const limit = params?.limit || 12;
+  const page = params?.page ?? 1;
+  const limit = params?.limit ?? 12;
   const language = params?.language;
   
   let filteredCourses = dummyCourses;
@@ -209,10 +202,8 @@ export async function getCourses(params?: {
 }
 
 export async function getLanguages() {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  return dummyLanguages;
+  const res = await axios.get('/languages');
+  return res.data;
 }
 
 const courseApis = {
