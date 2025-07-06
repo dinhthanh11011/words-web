@@ -13,13 +13,22 @@ interface CourseState {
     total: number;
     totalPages: number;
   };
+  languagePagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+  };
 }
 
 export const fetchCourses = createAsyncThunk(
   'course/fetchCourses',
-  async (params: { page?: number; limit?: number; language?: string } = {}, { rejectWithValue }) => {
+  async (
+    params: { page?: number; limit?: number; language?: string } | undefined,
+    { rejectWithValue }
+  ) => {
+    const safeParams = params ?? {};
     try {
-      const data = await courseApi.getCourses(params);
+      const data = await courseApi.getCourses(safeParams);
       return data;
     } catch (err) {
       return rejectWithValue(err);
@@ -29,9 +38,13 @@ export const fetchCourses = createAsyncThunk(
 
 export const fetchLanguages = createAsyncThunk(
   'course/fetchLanguages',
-  async (_, { rejectWithValue }) => {
+  async (
+    params: { page?: number; limit?: number } | undefined,
+    { rejectWithValue }
+  ) => {
+    const safeParams = params ?? {};
     try {
-      const data = await courseApi.getLanguages();
+      const data = await courseApi.getLanguages(safeParams);
       return data;
     } catch (err) {
       return rejectWithValue(err);
@@ -51,6 +64,11 @@ const initialState: CourseState = {
     total: 0,
     totalPages: 0,
   },
+  languagePagination: {
+    page: 1,
+    pageSize: 10,
+    total: 0,
+  },
 };
 
 const courseSlice = createSlice({
@@ -66,6 +84,13 @@ const courseSlice = createSlice({
     setPageSize(state, action) {
       state.pagination.limit = action.payload;
       state.pagination.page = 1; // Reset to first page when changing page size
+    },
+    setLanguagePage(state, action) {
+      state.languagePagination.page = action.payload;
+    },
+    setLanguagePageSize(state, action) {
+      state.languagePagination.pageSize = action.payload;
+      state.languagePagination.page = 1; // Reset to first page when changing page size
     },
   },
   extraReducers: (builder) => {
@@ -94,7 +119,8 @@ const courseSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchLanguages.fulfilled, (state, action) => {
-        state.languages = action.payload;
+        state.languages = action.payload.items;
+        state.languagePagination.total = action.payload.total;
       })
       .addCase(fetchLanguages.rejected, (state, action) => {
         state.error = action.payload;
@@ -102,5 +128,11 @@ const courseSlice = createSlice({
   },
 });
 
-export const { setSelectedLanguage, setPage, setPageSize } = courseSlice.actions;
-export default courseSlice.reducer; 
+export const {
+  setSelectedLanguage,
+  setPage,
+  setPageSize,
+  setLanguagePage,
+  setLanguagePageSize,
+} = courseSlice.actions;
+export default courseSlice.reducer;

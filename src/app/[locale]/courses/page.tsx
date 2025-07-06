@@ -9,6 +9,7 @@ import {
   setSelectedLanguage,
   setPage,
   setPageSize,
+  setLanguagePage,
 } from '@/store/courseSlice';
 import { Button } from '@/components/ui/button';
 import CourseCard from '@/components/courses/CourseCard';
@@ -23,12 +24,16 @@ export default function Courses() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
 
-  const { courses, languages, selectedLanguage, loading, error, pagination } =
+  const { courses, languages, selectedLanguage, loading, error, pagination, languagePagination } =
     useSelector((state: RootState) => state.course);
 
   useEffect(() => {
-    dispatch(fetchLanguages());
-  }, [dispatch]);
+    const params = {
+      page: languagePagination.page,
+      limit: languagePagination.pageSize,
+    };
+    dispatch(fetchLanguages(params));
+  }, [dispatch, languagePagination.page, languagePagination.pageSize]);
 
   useEffect(() => {
     const params = {
@@ -50,6 +55,10 @@ export default function Courses() {
 
   const handlePageSizeChange = (size: number) => {
     dispatch(setPageSize(size));
+  };
+
+  const handleLanguagePageChange = (page: number) => {
+    dispatch(setLanguagePage(page));
   };
 
   const handleCreateCourse = () => {
@@ -148,6 +157,10 @@ export default function Courses() {
                 languages={languages}
                 selectedLanguage={selectedLanguage}
                 onLanguageChange={handleLanguageChange}
+                page={languagePagination.page}
+                pageSize={languagePagination.pageSize}
+                total={languagePagination.total}
+                onPageChange={handleLanguagePageChange}
               />
             </div>
 

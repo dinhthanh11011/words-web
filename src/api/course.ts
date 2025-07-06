@@ -26,6 +26,11 @@ export interface Language {
   names: LanguageName[];
 }
 
+export interface LanguagesResponse {
+  items: Language[];
+  total: number;
+}
+
 export interface CoursesResponse {
   courses: Course[];
   total: number;
@@ -201,9 +206,12 @@ export async function getCourses(params?: {
   } as CoursesResponse;
 }
 
-export async function getLanguages() {
-  const res = await axios.get('/languages');
-  return res.data;
+export async function getLanguages(params?: {
+  page?: number;
+  limit?: number;
+}) {
+  const res = await axios.get('/languages', { params });
+  return res.data as LanguagesResponse;
 }
 
 const courseApis = {
