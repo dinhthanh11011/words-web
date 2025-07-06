@@ -9,5 +9,8 @@
     "termsLink": "Điều khoản sử dụng",
     "and": "và",
     "privacyLink": "Chính sách bảo mật"
+  },
+  "LoginCallback": {
+    "loggingIn": "Đang đăng nhập..."
   }
 }

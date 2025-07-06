@@ -9,5 +9,8 @@
     "termsLink": "Terms of Service",
     "and": "and",
     "privacyLink": "Privacy Policy"
+  },
+  "LoginCallback": {
+    "loggingIn": "Logging in..."
   }
 }
