@@ -35,6 +35,14 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "loading": "Đang tải...",
-    "error": "Lỗi khi tải hồ sơ"
+    "error": "Lỗi khi tải hồ sơ",
+    "subtitle": "Quản lý cài đặt tài khoản và tùy chọn của bạn",
+    "personalInfoDesc": "Thông tin cá nhân và chi tiết tài khoản của bạn",
+    "settingsDesc": "Tùy chỉnh trải nghiệm của bạn",
+    "tryAgain": "Thử lại",
+    "notAvailable": "N/A"
+  },
+  "RootPage": {
+    "redirecting": "Đang chuyển hướng..."
   }
 }

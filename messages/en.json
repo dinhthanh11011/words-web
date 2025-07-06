@@ -35,6 +35,14 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "loading": "Loading...",
-    "error": "Error loading profile"
+    "error": "Error loading profile",
+    "subtitle": "Manage your account settings and preferences",
+    "personalInfoDesc": "Your personal information and account details",
+    "settingsDesc": "Customize your experience",
+    "tryAgain": "Try Again",
+    "notAvailable": "N/A"
+  },
+  "RootPage": {
+    "redirecting": "Redirecting..."
   }
 }

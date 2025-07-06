@@ -56,7 +56,7 @@ export default function Profile() {
           <div className="text-center">
             <div className="text-red-500 text-lg font-semibold mb-4">{t('error')}</div>
             <Button onClick={() => window.location.reload()}>
-              Try Again
+              {t('tryAgain')}
             </Button>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function Profile() {
         <div className="max-w-4xl mx-auto px-4">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{t('title')}</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your account settings and preferences</p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">{t('subtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -79,7 +79,7 @@ export default function Profile() {
               <Card>
                 <CardHeader>
                   <CardTitle>{t('personalInfo')}</CardTitle>
-                  <CardDescription>Your personal information and account details</CardDescription>
+                  <CardDescription>{t('personalInfoDesc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-center space-x-4">
@@ -99,7 +99,7 @@ export default function Profile() {
                         {t('name')}
                       </label>
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
-                        {user?.name || 'N/A'}
+                        {user?.name || t('notAvailable')}
                       </div>
                     </div>
                     <div>
@@ -107,7 +107,7 @@ export default function Profile() {
                         {t('email')}
                       </label>
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
-                        {user?.email || 'N/A'}
+                        {user?.email || t('notAvailable')}
                       </div>
                     </div>
                   </div>
@@ -120,7 +120,7 @@ export default function Profile() {
               <Card>
                 <CardHeader>
                   <CardTitle>{t('settings')}</CardTitle>
-                  <CardDescription>Customize your experience</CardDescription>
+                  <CardDescription>{t('settingsDesc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Theme Setting */}
