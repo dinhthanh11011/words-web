@@ -1,8 +1,7 @@
-import React from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Course } from '@/api/course';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
-import { useTranslations, useLocale } from 'next-intl';
 
 interface CourseCardProps {
   readonly course: Course;
@@ -10,9 +9,8 @@ interface CourseCardProps {
 }
 
 export default function CourseCard({ course, onClick }: CourseCardProps) {
-  const t = useTranslations('Courses');
   const locale = useLocale();
-  
+
   // Get language name in current locale, fallback to English
   const getLanguageName = () => {
     const found = course.language.names?.find(n => n.locale === locale);
@@ -22,7 +20,7 @@ export default function CourseCard({ course, onClick }: CourseCardProps) {
   };
 
   return (
-    <Card 
+    <Card
       className="cursor-pointer hover:shadow-lg transition-shadow duration-200 overflow-hidden"
       onClick={onClick}
     >

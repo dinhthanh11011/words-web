@@ -1,10 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import courseApi, { Course, Language } from '@/api/course';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 interface CourseState {
   courses: Course[];
   languages: Language[];
-  selectedLanguage: string;
+  selectedLanguage: Language | null;
   loading: boolean;
   error: unknown;
   pagination: {
@@ -23,7 +23,7 @@ interface CourseState {
 export const fetchCourses = createAsyncThunk(
   'course/fetchCourses',
   async (
-    params: { page?: number; limit?: number; language?: string } | undefined,
+    params: { page?: number; limit?: number; languageId?: number, userId?: number } | undefined,
     { rejectWithValue }
   ) => {
     const safeParams = params ?? {};
@@ -55,7 +55,7 @@ export const fetchLanguages = createAsyncThunk(
 const initialState: CourseState = {
   courses: [],
   languages: [],
-  selectedLanguage: 'en',
+  selectedLanguage: null,
   loading: false,
   error: null,
   pagination: {
@@ -104,7 +104,9 @@ const courseSlice = createSlice({
         state.loading = false;
         state.courses = action.payload.items;
         state.pagination.total = action.payload.total;
-        state.pagination.totalPages = Math.ceil(action.payload.total / state.pagination.limit);
+        state.pagination.totalPages = Math.ceil(
+          action.payload.total / state.pagination.limit
+        );
       })
       .addCase(fetchCourses.rejected, (state, action) => {
         state.loading = false;

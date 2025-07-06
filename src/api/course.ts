@@ -7,7 +7,7 @@ export interface LanguageName {
   name: string;
 }
 
-export interface CourseLanguage {
+export interface Language {
   id: number;
   locale: string;
   flag: string;
@@ -29,7 +29,7 @@ export interface Course {
   userId: number;
   createdAt: string;
   updatedAt: string;
-  language: CourseLanguage;
+  language: Language;
   user: CourseUser;
 }
 
@@ -46,7 +46,8 @@ export interface CoursesResponse {
 export async function getCourses(params?: {
   page?: number;
   limit?: number;
-  language?: string;
+  languageId?: number;
+  userId?: number;
 }) {
   const res = await axios.get('/courses', { params });
   return res.data as CoursesResponse;

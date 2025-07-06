@@ -4,8 +4,8 @@ import { useTranslations, useLocale } from 'next-intl';
 
 interface LanguageFilterProps {
   readonly languages: Language[];
-  readonly selectedLanguage: string;
-  readonly onLanguageChange: (languageCode: string) => void;
+  readonly selectedLanguage: Language | null;
+  readonly onLanguageChange: (languageCode: Language | null) => void;
   readonly page: number;
   readonly pageSize: number;
   readonly total: number;
@@ -47,10 +47,10 @@ export default function LanguageFilter({
         <>
           <div className='space-y-2'>
             <button
-              onClick={() => onLanguageChange('all')}
-              className={`w-full text-left px-3 py-2 rounded-md transition-colors ${selectedLanguage === 'all'
-                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+              onClick={() => onLanguageChange(null)}
+              className={`w-full text-left px-3 py-2 rounded-md transition-colors ${!selectedLanguage
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
             >
               {t('allCourses')}
@@ -58,10 +58,10 @@ export default function LanguageFilter({
             {languages.map((language) => (
               <button
                 key={language.id}
-                onClick={() => onLanguageChange(language.locale)}
-                className={`w-full text-left px-3 py-2 rounded-md transition-colors flex items-center space-x-2 ${selectedLanguage === language.locale
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                onClick={() => onLanguageChange(language)}
+                className={`w-full text-left px-3 py-2 rounded-md transition-colors flex items-center space-x-2 ${selectedLanguage?.locale === language.locale
+                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
               >
                 {language.flag && (

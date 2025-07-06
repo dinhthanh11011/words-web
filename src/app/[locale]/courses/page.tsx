@@ -18,6 +18,7 @@ import Pagination from '@/components/courses/Pagination';
 import PageSizeSelector from '@/components/courses/PageSizeSelector';
 import AuthGuard from '@/components/common/AuthGuard';
 import { useRouter } from 'next/navigation';
+import { Language } from '@/api/course';
 
 export default function Courses() {
   const t = useTranslations('Courses');
@@ -39,14 +40,14 @@ export default function Courses() {
     const params = {
       page: pagination.page,
       limit: pagination.limit,
-      language: selectedLanguage === 'all' ? undefined : selectedLanguage,
+      languageId: selectedLanguage?.id,
     };
     dispatch(fetchCourses(params));
   }, [dispatch, selectedLanguage, pagination.page, pagination.limit]);
 
-  const handleLanguageChange = (languageCode: string) => {
-    dispatch(setSelectedLanguage(languageCode));
-    dispatch(setPage(1)); // Reset to first page when changing language
+  const handleLanguageChange = (language: Language | null) => {
+    dispatch(setSelectedLanguage(language));
+    dispatch(setPage(1));
   };
 
   const handlePageChange = (page: number) => {
