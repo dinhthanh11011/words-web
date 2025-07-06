@@ -50,6 +50,7 @@
   },
   "Courses": {
     "title": "Khóa học",
+    "subtitle": "Khám phá và học từ bộ sưu tập khóa học ngôn ngữ của chúng tôi",
     "createCourse": "Tạo khóa học",
     "languages": "Ngôn ngữ",
     "allCourses": "Tất cả khóa học",
@@ -59,6 +60,16 @@
     "noCourses": "Không tìm thấy khóa học nào",
     "loading": "Đang tải khóa học...",
     "error": "Lỗi khi tải khóa học",
-    "tryAgain": "Thử lại"
+    "tryAgain": "Thử lại",
+    "previous": "Trước",
+    "next": "Tiếp",
+    "first": "Đầu",
+    "last": "Cuối",
+    "itemsPerPage": "Số mục mỗi trang",
+    "showing": "Hiển thị",
+    "of": "trên tổng số",
+    "items": "mục",
+    "words": "từ",
+    "enrolled": "đã đăng ký"
   }
 }

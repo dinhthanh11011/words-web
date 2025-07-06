@@ -50,6 +50,7 @@
   },
   "Courses": {
     "title": "Courses",
+    "subtitle": "Explore and learn from our collection of language courses",
     "createCourse": "Create Course",
     "languages": "Languages",
     "allCourses": "All Courses",
@@ -59,6 +60,16 @@
     "noCourses": "No courses found",
     "loading": "Loading courses...",
     "error": "Error loading courses",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last",
+    "itemsPerPage": "Items per page",
+    "showing": "Showing",
+    "of": "of",
+    "items": "items",
+    "words": "words",
+    "enrolled": "enrolled"
   }
 }
