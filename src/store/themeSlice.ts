@@ -1,31 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialTheme = typeof window !== 'undefined'
-  ? localStorage.getItem('theme') ?? 'light'
-  : 'light';
+// Initialize theme from localStorage or default to 'light'
+const getInitialTheme = (): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('theme') ?? 'light';
+  }
+  return 'light';
+};
+
+// Apply theme to DOM
+export const applyThemeToDOM = (theme: string) => {
+  if (typeof window !== 'undefined') {
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }
+};
+
+// Initialize theme on app startup
+export const initializeTheme = () => {
+  const theme = getInitialTheme();
+  applyThemeToDOM(theme);
+  return theme;
+};
 
 const themeSlice = createSlice({
   name: 'theme',
   initialState: {
-    value: initialTheme,
+    value: getInitialTheme(),
   },
   reducers: {
     setTheme(state, action) {
       state.value = action.payload;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('theme', action.payload);
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add(action.payload);
-      }
+      applyThemeToDOM(action.payload);
     },
     toggleTheme(state) {
       const newTheme = state.value === 'dark' ? 'light' : 'dark';
       state.value = newTheme;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add(newTheme);
-      }
+      applyThemeToDOM(newTheme);
     },
   },
 });

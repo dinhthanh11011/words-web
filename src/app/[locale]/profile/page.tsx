@@ -1,24 +1,21 @@
 "use client";
 import AuthGuard from '@/components/common/AuthGuard'
-import { AppDispatch, RootState } from '@/store'
-import { setTheme } from '@/store/themeSlice'
+import { RootState } from '@/store'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Switch } from '@/components/ui/switch'
+import { ThemeSwitcher } from '@/components/common/ThemeSwitcher'
 import { useLocale } from '@/hooks/useLocale'
 import { useLogout } from '@/hooks/useLogout'
 
 export default function Profile() {
-  const dispatch: AppDispatch = useDispatch()
   const t = useTranslations('Profile')
   
   const user = useSelector((state: RootState) => state.user.info as { name: string; email?: string; image?: string } | null)
-  const theme = useSelector((state: RootState) => state.theme.value)
   const loading = useSelector((state: RootState) => state.user.loading)
   const error = useSelector((state: RootState) => state.user.error)
   
@@ -26,10 +23,6 @@ export default function Profile() {
   
   const { currentLocale, handleLocaleChange, locales } = useLocale()
   const { handleLogout } = useLogout()
-
-  const handleThemeChange = (newTheme: string) => {
-    dispatch(setTheme(newTheme))
-  }
 
   const onLogoutConfirm = () => {
     setShowLogoutConfirm(false)
@@ -128,17 +121,7 @@ export default function Profile() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                       {t('theme')}
                     </label>
-                    <div className="flex items-center space-x-4">
-                      <span className="text-xs text-gray-500 dark:text-gray-400">🌞</span>
-                      <Switch
-                        checked={theme === 'dark'}
-                        onCheckedChange={v => handleThemeChange(v ? 'dark' : 'light')}
-                      />
-                      <span className="text-xs text-gray-500 dark:text-gray-400">🌙</span>
-                    </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {theme === 'dark' ? t('dark') : t('light')}
-                    </p>
+                    <ThemeSwitcher />
                   </div>
 
                   {/* Language Setting */}

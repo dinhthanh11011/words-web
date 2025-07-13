@@ -1,9 +1,8 @@
 'use client';
-import { AppDispatch, RootState } from '@/store';
-import { setTheme } from '@/store/themeSlice';
+import { RootState } from '@/store';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslations } from 'next-intl';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -15,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { Switch } from '../ui/switch';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import { useLocale } from '@/hooks/useLocale';
 import { useLogout } from '@/hooks/useLogout';
 
@@ -26,12 +25,10 @@ export function Navbar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const dispatch: AppDispatch = useDispatch();
   const user = useSelector(
     (state: RootState) =>
       state.user.info as { name: string; image?: string } | null
   );
-  const theme = useSelector((state: RootState) => state.theme.value);
   const t = useTranslations('Navbar');
 
   const { handleLocaleChange, locales } = useLocale();
@@ -40,14 +37,6 @@ export function Navbar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(theme);
-      localStorage.setItem('theme', theme);
-    }
-  }, [theme]);
 
   // Auto close mobile menu when clicking outside
   useEffect(() => {
@@ -68,10 +57,6 @@ export function Navbar({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMobileMenuOpen]);
-
-  const handleThemeChange = (newTheme: string) => {
-    dispatch(setTheme(newTheme));
-  };
 
   const handleProfileClick = () => {
     setIsPopoverOpen(false);
@@ -152,13 +137,8 @@ export function Navbar({
         </div>
 
         {/* Theme Switcher - Desktop only */}
-        <div className='hidden md:flex items-center gap-2'>
-          <span className='text-xs text-gray-500 dark:text-gray-400'>🌞</span>
-          <Switch
-            checked={theme === 'dark'}
-            onCheckedChange={(v) => handleThemeChange(v ? 'dark' : 'light')}
-          />
-          <span className='text-xs text-gray-500 dark:text-gray-400'>🌙</span>
+        <div className='hidden md:flex'>
+          <ThemeSwitcher />
         </div>
 
         {/* Mobile Menu Button */}
@@ -278,20 +258,7 @@ export function Navbar({
             {/* Mobile Theme Switcher */}
             <div className='flex items-center justify-between px-3 py-2'>
               <span className='text-sm text-foreground'>Theme</span>
-              <div className='flex items-center gap-2'>
-                <span className='text-xs text-gray-500 dark:text-gray-400'>
-                  🌞
-                </span>
-                <Switch
-                  checked={theme === 'dark'}
-                  onCheckedChange={(v) =>
-                    handleThemeChange(v ? 'dark' : 'light')
-                  }
-                />
-                <span className='text-xs text-gray-500 dark:text-gray-400'>
-                  🌙
-                </span>
-              </div>
+              <ThemeSwitcher />
             </div>
           </div>
         </div>
