@@ -10,10 +10,11 @@ export const useLogout = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const handleLogout = useCallback(() => {
-    userApis.logout();
-    dispatch(clearToken());
-    dispatch(clearUser());
-    router.replace('/login');
+    userApis.logout().then(() => {
+      dispatch(clearToken());
+      dispatch(clearUser());
+      router.replace('/login');
+    });
   }, [dispatch, router]);
 
   return {

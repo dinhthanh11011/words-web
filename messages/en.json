@@ -18,7 +18,9 @@
     "logout": "Logout",
     "home": "Home",
     "courses": "Courses",
-    "profile": "Profile"
+    "profile": "Profile",
+    "language": "Language",
+    "theme": "Theme"
   },
   "Profile": {
     "title": "Profile",
@@ -72,5 +74,8 @@
     "words": "words",
     "enrolled": "enrolled",
     "noLanguages": "No languages found"
+  },
+  "AuthGuard": {
+    "loading": "Loading..."
   }
 }

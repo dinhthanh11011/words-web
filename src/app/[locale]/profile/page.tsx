@@ -76,7 +76,7 @@ export default function Profile() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <Avatar className="w-20 h-20">
+                    <Avatar className="w-20 h-20 !static">
                       <AvatarImage src={user?.image} alt={user?.name} />
                       <AvatarFallback className="text-lg">{user?.name?.[0] || '?'}</AvatarFallback>
                     </Avatar>

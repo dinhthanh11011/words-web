@@ -237,7 +237,7 @@ export function Navbar({
 
             {/* Mobile Language Switcher */}
             <div className='flex items-center justify-between px-3 py-2'>
-              <span className='text-sm text-foreground'>Language</span>
+              <span className='text-sm text-foreground'>{t('language')}</span>
               <div className='flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1'>
                 {locales.map((locale) => (
                   <button
@@ -257,7 +257,7 @@ export function Navbar({
 
             {/* Mobile Theme Switcher */}
             <div className='flex items-center justify-between px-3 py-2'>
-              <span className='text-sm text-foreground'>Theme</span>
+              <span className='text-sm text-foreground'>{t('theme')}</span>
               <ThemeSwitcher />
             </div>
           </div>

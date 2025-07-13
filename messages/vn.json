@@ -18,7 +18,9 @@
     "logout": "Đăng xuất",
     "home": "Trang chủ",
     "courses": "Khóa học",
-    "profile": "Hồ sơ"
+    "profile": "Hồ sơ",
+    "language": "Ngôn ngữ",
+    "theme": "Giao diện"
   },
   "Profile": {
     "title": "Hồ sơ",
@@ -72,5 +74,8 @@
     "words": "từ",
     "enrolled": "đã đăng ký",
     "noLanguages": "Không tìm thấy ngôn ngữ nào"
+  },
+  "AuthGuard": {
+    "loading": "Đang tải..."
   }
 }
