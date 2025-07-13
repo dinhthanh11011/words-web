@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import userApi from '@/api/user';
 
+const STORAGE_KEYS = {
+  USER_INFO: 'userInfo',
+  TOKEN: 'token',
+} as const;
+
 interface UserState {
   info: { name: string; email?: string; image?: string } | null;
   loading: boolean;
@@ -36,39 +41,39 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.info = action.payload;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('userInfo', JSON.stringify(action.payload));
+        localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(action.payload));
       }
     },
     clearUser(state) {
       state.info = null;
       state.error = null;
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('userInfo');
+        localStorage.removeItem(STORAGE_KEYS.USER_INFO);
       }
     },
     setToken(state, action) {
       state.token = action.payload;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('token', action.payload);
+        localStorage.setItem(STORAGE_KEYS.TOKEN, action.payload);
       }
     },
     clearToken(state) {
       state.token = null;
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
+        localStorage.removeItem(STORAGE_KEYS.TOKEN);
       }
     },
     initializeFromStorage(state) {
       if (typeof window !== 'undefined') {
-        const storedUserInfo = localStorage.getItem('userInfo');
-        const storedToken = localStorage.getItem('token');
+        const storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+        const storedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
         
         if (storedUserInfo) {
           try {
             state.info = JSON.parse(storedUserInfo);
           } catch (error) {
             console.error('Failed to parse stored user info:', error);
-            localStorage.removeItem('userInfo');
+            localStorage.removeItem(STORAGE_KEYS.USER_INFO);
           }
         }
         
@@ -89,7 +94,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.info = action.payload;
         if (typeof window !== 'undefined') {
-          localStorage.setItem('userInfo', JSON.stringify(action.payload));
+          localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(action.payload));
         }
       })
       .addCase(fetchUser.rejected, (state, action) => {
@@ -100,6 +105,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, setToken, clearToken, initializeFromStorage } =
-  userSlice.actions;
+export const { 
+  setUser,
+  clearUser,
+  setToken,
+  clearToken,
+  initializeFromStorage,
+} = userSlice.actions;
+
 export default userSlice.reducer;

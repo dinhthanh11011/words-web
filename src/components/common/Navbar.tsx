@@ -91,10 +91,18 @@ export function Navbar({
     return pathname.includes(path);
   };
 
-  const navigationItems = [
+  const publicNavigationItems = [
     { href: '/home', label: t('home') },
+  ];
+
+  const authNavigationItems = [
     { href: '/courses', label: t('courses') },
     { href: '/profile', label: t('profile') },
+  ];
+
+  const navigationItems = [
+    ...publicNavigationItems,
+    ...(user ? authNavigationItems : []),
   ];
 
   return (
