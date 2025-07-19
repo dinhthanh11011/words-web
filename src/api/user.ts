@@ -1,12 +1,12 @@
 import axios from '@/lib/axios';
 
 export async function getUserInfo() {
-    const res = await axios.get('/users/information');
+    const res = await axios.get('/sso/users/information');
     return res.data;
 }
 
 export async function logout() {
-    const res = await axios.get('/auth/logout');
+    const res = await axios.get('/sso/auth/logout');
     return res.data;
 }
 

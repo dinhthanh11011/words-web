@@ -10,13 +10,13 @@ import { useSelector } from "react-redux";
 export default function Login() {
   const t = useTranslations('LoginPage');
   const router = useRouter();
-  const token = useSelector((state: RootState) => state.user.token);
+  const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (token) {
+    if (user.token && user.info) {
       router.replace('/home');
     }
-  }, [router, token]);
+  }, [router, user]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center p-4">
